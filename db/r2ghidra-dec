@@ -11,14 +11,14 @@ R2PM_INSTALL() {
 	mkdir -p build && cd build || exit 1
 	cmake -DRADARE2_INSTALL_PLUGDIR="${R2PM_PLUGDIR}" .. || exit 1
 	${MAKE} -j4 || exit 1
-	${MAKE} install || exit 1
+	${R2PM_SUDO} ${MAKE} install || exit 1
 }
 
 R2PM_UNINSTALL() {
 	cd build || exit 1
 	rm -rf build
-	cat install_manifest.txt | xargs rm -rv
-	rm -r "${R2PM_PLUGDIR}/r2ghidra_sleigh"
+	cat install_manifest.txt | xargs ${R2PM_SUDO} rm -rv
+	${R2PM_SUDO} rm -r "${R2PM_PLUGDIR}/r2ghidra_sleigh"
 }
 
 R2PM_END
